@@ -44,6 +44,7 @@ class MyForm extends React.Component{
 	handleReset(event){
 		
 		// reset all the keys to clear out the input fields
+		// this will also reset formValid
 		Object.keys(this.state).forEach((key) => {
 			this.setState({
 				[key]: ''
@@ -52,9 +53,6 @@ class MyForm extends React.Component{
 
 		// uncheck the checkbox
 		this.refs.checkbox.checked = false;
-
-		// no need to reset formValid as the onChangeHandler will handle that 
-
 	}
 
 	// will display the table
@@ -135,7 +133,7 @@ class MyForm extends React.Component{
 							name="deviation"
 							type="number"
 							step="any" // float
-							min="1" // at least 1
+							min="1e-100" // > 0
 							value={this.state.deviation} 
 							onChange={this.handleChange} 
 							required/>
