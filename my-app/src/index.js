@@ -1,51 +1,66 @@
+// imports
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// The form class
 class MyForm extends React.Component{
 
 	constructor(props){
 		super(props);
 
-		this.state = {};
+		this.state = {}; // init the state to empty
 
+		// bind all the handle functions to this
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleReset = this.handleReset.bind(this);
 	}
 
+	// Whenever a value is changed
 	handleChange(event){
 
+		// We want to get the name of the component changed
 		const target = event.target;
 		const name = target.name;
 
+		// Get the correct value based on number or checkbox
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 
+		// set the state
 		this.setState({
 			[name]: value,
-			formValid: false
+			formValid: false // we set the form to invalid in case a change was made after rending the table
 		});
 
 	}
 
+	// On submit, if we were able to submit, the form should be valid
 	handleSubmit(event){
 		event.preventDefault();
 		this.setState({"formValid": true});
 	}
 
+	// On reset
 	handleReset(event){
 		
+		// reset all the keys to clear out the input fields
 		Object.keys(this.state).forEach((key) => {
 			this.setState({
 				[key]: ''
 			})
 		});
 
+		// uncheck the checkbox
 		this.refs.checkbox.checked = false;
+
+		// no need to reset formValid as the onChangeHandler will handle that 
 
 	}
 
+	// will display the table
 	renderTable(){
 
+		// used to display the last row
 		let h = this.state.hypothesis;
 
 		return (
@@ -53,36 +68,38 @@ class MyForm extends React.Component{
 				<table>
 					<tr>
 						<th>Sample Size:</th>
-						<th>{this.state.size}</th>
+						<th>{parseInt(this.state.size)}</th>
 					</tr>
 					<tr>
 						<th>Sample Mean:</th>
-						<th>{this.state.mean}</th>
+						<th>{parseFloat(this.state.mean)}</th>
 					</tr>
 					<tr>
 						<th>Standard deviation:</th>
-						<th>{this.state.deviation}</th>
+						<th>{parseFloat(this.state.deviation)}</th>
 					</tr>
 					{h ? this.renderHMean() : ''}
 				</table>
 			</div>
-		)
+		);
 
 	}
 
+	// renders the last row
 	renderHMean(){
 
 		return(
 
 			<tr>
 				<th>Hypothesized mean:</th>
-				<th>{this.state.hMean}</th>
+				<th>{parseFloat(this.state.hMean)}</th>
 			</tr>
 
 		);
 
 	}
 
+	// the main render function
 	render(){
 
 		return(
@@ -95,7 +112,7 @@ class MyForm extends React.Component{
 						<input 
 							name="size"
 							type="number"
-							min="2"
+							min="2" // at least 2
 							value={this.state.size} 
 							onChange={this.handleChange} 
 							required/>
@@ -106,7 +123,7 @@ class MyForm extends React.Component{
 						<input 
 							name="mean"
 							type="number" 
-							step="any"
+							step="any" // float
 							value={this.state.mean} 
 							onChange={this.handleChange} 
 							required/>
@@ -117,8 +134,8 @@ class MyForm extends React.Component{
 						<input 
 							name="deviation"
 							type="number"
-							step="any"
-							min="1"
+							step="any" // float
+							min="1" // at least 1
 							value={this.state.deviation} 
 							onChange={this.handleChange} 
 							required/>
@@ -139,10 +156,10 @@ class MyForm extends React.Component{
 						<input 
 							name="hMean"
 							type="number"
-							step="any"
+							step="any" // float
 							value={this.state.hMean} 
 							onChange={this.handleChange}
-							disabled={!this.state.hypothesis} 
+							disabled={!this.state.hypothesis} // only enabled if checkbox is selected
 							required/>
 					</label>
 					<br />
@@ -153,12 +170,14 @@ class MyForm extends React.Component{
 				<br />
 
 				{this.state.formValid ? this.renderTable() : ''}
-			</div>
+			</div> 
 
 		)
 
 	}
 
+	// only render the table if the form is valid
+
 }
 
-ReactDOM.render(<MyForm />, document.getElementById('root'));
+ReactDOM.render(<MyForm />, document.getElementById('root')); // Add the form to the root page
