@@ -51,9 +51,11 @@ class MyForm extends React.Component{
 					Sample Size:
 					<input 
 						name="size"
-						type="number" 
+						type="number"
+						min="2"
 						value={this.state.size} 
-						onChange={this.handleChange} />
+						onChange={this.handleChange} 
+						required/>
 				</label>
 				<br />
 				<label>
@@ -61,17 +63,21 @@ class MyForm extends React.Component{
 					<input 
 						name="mean"
 						type="number" 
+						step="any"
 						value={this.state.mean} 
-						onChange={this.handleChange} />
+						onChange={this.handleChange} 
+						required/>
 				</label>
 				<br />
 				<label>
 					Standard deviation:
 					<input 
 						name="deviation"
-						type="number" 
+						type="number"
+						min="1"
 						value={this.state.deviation} 
-						onChange={this.handleChange} />
+						onChange={this.handleChange} 
+						required/>
 				</label>
 				<br />
 				<label>
@@ -88,10 +94,12 @@ class MyForm extends React.Component{
 					Hypothesized mean:
 					<input 
 						name="hMean"
-						type="number" 
+						type="number"
+						step="any"
 						value={this.state.hMean} 
 						onChange={this.handleChange}
-						disabled={!this.state.hypothesis} />
+						disabled={!this.state.hypothesis} 
+						required/>
 				</label>
 				<br />
 				<input type="submit" value="Ok" />
