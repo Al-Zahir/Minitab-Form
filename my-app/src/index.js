@@ -74,6 +74,7 @@ class MyForm extends React.Component{
 					<input 
 						name="deviation"
 						type="number"
+						step="any"
 						min="1"
 						value={this.state.deviation} 
 						onChange={this.handleChange} 
