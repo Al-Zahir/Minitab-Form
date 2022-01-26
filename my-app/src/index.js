@@ -29,7 +29,7 @@ class MyForm extends React.Component{
 		// set the state
 		this.setState({
 			[name]: value,
-			formValid: false // we set the form to invalid in case a change was made after rending the table
+			formValid: false // we set the form to invalid in case a change was made after rendering the table
 		});
 
 	}
